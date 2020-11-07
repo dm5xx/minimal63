@@ -26,8 +26,11 @@ EthernetServer server(80); // (port 80 is default for HTTP)
 
 char requestString[100];
 
-String baseURL = "h.mmmedia-online.de/minimal63/";
-String webSwitchUrlRemote = "192.168.97.177"; 
+// all files are in their newest version on DM5XX webserver. You have to point this address to your websrver oder local computer, if you want to change something like the labels..
+String URLToJS = "h.mmmedia-online.de/minimal63/";
+
+// this is the url, where the dashboard will call to reach the switch. can be an internal IP (same as IPADDRESS above!!!) or a dyndns-url, forwarded to IPADDRESS (above).
+String SwitchURL = "192.168.97.177"; 
 
 ////////////////////////////////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////////
 void GetOrderedArraybyValue(int value, byte * feld)
@@ -213,22 +216,23 @@ void MainPage(EthernetClient &client)
    client.println(F("<HTML>"));
    client.println(F("<HEAD>"));
    client.println(F("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>"));
-   client.println(("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://"+ baseURL +"style.css\" media=\"screen\"/>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"init.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"Label.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"Globals.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"LockDef.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"Lock.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"GroupDef.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"Group.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"UiHandler.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"GetData.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"SetData.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"Helper.js\"></script>"));
+   client.println(("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://"+ URLToJS +"style.css\" media=\"screen\"/>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"init.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Disable.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Label.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Globals.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"LockDef.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Lock.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"GroupDef.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Group.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"UiHandler.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"GetData.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"SetData.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Helper.js\"></script>"));
    client.print(F(""));
-   client.println(F("// Change webSwitchUrlRemote to the url, where your webswitch is reachable from outside/inside. Dont forget the portforwarding..."));
+   client.println(F("// Change SwitchURL to the url, where your webswitch is reachable from outside/inside. Dont forget the portforwarding..."));
    client.print(F("<script>var url='"));
-   client.print((webSwitchUrlRemote));
+   client.print((SwitchURL));
    client.println(F("';</script>"));
    client.print(F("<TITLE>"));
    client.print("minimal63 - Remote Switch by DM5XX");

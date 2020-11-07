@@ -70,10 +70,18 @@ function createBankButtons(bankNr)
     for(var i = 0; i < 16; i++)
     {
         var createAElement = document.createElement("a");
-        createAElement.setAttribute("onclick", "clickRelay("+bankNr+","+i+");");
+
+        if(!window["disable"]["disable"+bankNr].includes(i))
+        {
+            createAElement.setAttribute("onclick", "clickRelay("+bankNr+","+i+");");
+            createAElement.setAttribute("class", "xxButton");    
+            createAElement.innerHTML = window["label"+bankNr]["pin"+i][0] + "<br/>" + window["label"+bankNr]["pin"+i][1];
+        }
+        else
+        {
+            createAElement.setAttribute("class", "xxButtonDisabled");    
+        }
         createAElement.setAttribute("id", "b"+bankNr+"b"+i);
-        createAElement.setAttribute("class", "xxButton");
-        createAElement.innerHTML = window["label"+bankNr]["pin"+i][0] + "<br/>" + window["label"+bankNr]["pin"+i][1];
         document.getElementById("container").appendChild(createAElement);      
     }
 }
