@@ -11,8 +11,8 @@ Create dummy project. earch for it. Mine was in E:\OneDrive\Documents\Arduino
 Paste the content of "libraries" into "libraries"
 Paste minimal63 and minimal63_web into this folder.
 
-Label.js => Adjust the Labels for the Webpage
-Lock.js => Define which slots should be locked
-Group.ls => Create groups. Highlander principle "There can be only one (on)"
+Label.js => Adjust the Labels for the Webpage<br/>
+Lock.js => Define which slots should be locked<br/>
+Group.ls => Create groups. Highlander principle "There can be only one (on)"<br/>
 
 Questions? dm5xx@gmx.de
