@@ -3,7 +3,7 @@
 You need:
 - Arduino Mega
 - Arduino Ethernet-Shield W5100 (oder W5500)
-- PCB from remoteQTH.com is nor necessary, but makes things a lot more easy... https://remoteqth.com/arduino-web-switch.php
+- PCB from remoteQTH.com is not necessary, but makes things a lot more easy... https://remoteqth.com/arduino-web-switch.php
 
 Install newest Arduino IDE.
 Create dummy project. earch for it. Mine was in E:\OneDrive\Documents\Arduino
