@@ -1,8 +1,9 @@
 #include <SoftReset.h>
 #include <Ethernet.h>
 
-#define DEBUG
+//#define DEBUG
 
+// here you can define, which pin-number belongs to which bank...
 byte pinsBank0[] = { 54, 2, 3, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18};
 byte pinsBank1[] = { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34}; 
 byte pinsBank2[] = { 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 53}; 
@@ -26,8 +27,11 @@ EthernetServer server(80); // (port 80 is default for HTTP)
 
 char requestString[100];
 
-// all files are in their newest version on DM5XX webserver. You have to point this address to your websrver oder local computer, if you want to change something like the labels..
+// all files are in their newest version on DM5XX webserver. You have to point this address to your websrver oder local computer, if you want to change something else than labels..
 String URLToJS = "h.mmmedia-online.de/minimal63/";
+
+// adjust this URL if you want to change Label.js, GroupDef.js, Lock.js, Disable.js (to customize them). So ALL 4 files must be stored on your own webserver/local computer than, even if you just want to leave one or more default!
+String URLToCustomize = "h.mmmedia-online.de/minimal63NAM/";
 
 // this is the url, where the dashboard will call to reach the switch. can be an internal IP (same as IPADDRESS above!!!) or a dyndns-url, forwarded to IPADDRESS (above).
 String SwitchURL = "192.168.97.177"; 
@@ -99,12 +103,15 @@ void updatePinStatus(int value, int bankNr)
       bankStatus0 = value;
       GetOrderedArraybyValue(value, &statusBank0[0]);
       updateRelays(&statusBank0[0],&pinsBank0[0]);
+
+#ifdef DEBUG
       Serial.println(bankStatus0);
       for(int a=0; a < 16; a++)
       {
         Serial.print(statusBank0[a]);
         Serial.print(',');
       }
+#endif
       break;
     case 1:
       bankStatus1 = value;
@@ -218,19 +225,19 @@ void MainPage(EthernetClient &client)
    client.println(F("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>"));
    client.println(("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://"+ URLToJS +"style.css\" media=\"screen\"/>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"init.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Disable.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Label.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Disable.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Label.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Globals.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"LockDef.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"LockDef.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Lock.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"GroupDef.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"GroupDef.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Group.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"UiHandler.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"GetData.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"SetData.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Helper.js\"></script>"));
    client.print(F(""));
-   client.println(F("// Change SwitchURL to the url, where your webswitch is reachable from outside/inside. Dont forget the portforwarding..."));
+   client.println(F("<!-- Change SwitchURL to the url, where your webswitch is reachable from outside/inside. Dont forget the portforwarding...-->"));
    client.print(F("<script>var url='"));
    client.print((SwitchURL));
    client.println(F("';</script>"));
@@ -308,12 +315,16 @@ void loop()
         clientline[index] = 0;
         
         // Print it out for debugging
+#ifdef DEBUG
         Serial.println(clientline);
+#endif
         
         //if HTTP request has ended
         if (strstr(clientline, "GET /Get/") != 0) 
         {    
+#ifdef DEBUG
             Serial.println("Get detected");
+#endif
             GetDataJSON(client);
             break;
         }
@@ -334,25 +345,35 @@ void loop()
         {
           int value = subSss.toInt(); 
   
+#ifdef DEBUG
           Serial.println(clientline[8]);
           Serial.println(value);
+#endif
 
           switch (clientline[8])
           {
             case '0':
+#ifdef DEBUG
               Serial.println("SetBank0 detected");
+#endif
               updatePinStatus(value, 0);            
               break;
             case '1':
+#ifdef DEBUG
               Serial.println("SetBank1 detected");
+#endif
               updatePinStatus(value, 1);            
               break;
             case '2':
+#ifdef DEBUG
               Serial.println("SetBank2 detected");
+#endif
               updatePinStatus(value, 2);            
               break;
             case '3':
+#ifdef DEBUG
               Serial.println("SetBank3 detected");
+#endif
               updatePinStatus(value, 3);            
               break;
           }
@@ -365,25 +386,35 @@ void loop()
           int pinNr = subSss.substring(0, delim).toInt();
           int cmd = (subSss[subSss.length()-1])-48;
 
+#ifdef DEBUG
           Serial.println(pinNr);
           Serial.println(cmd);
+#endif
 
           switch (clientline[8])
           {
             case '0':
+#ifdef DEBUG
               Serial.println("Manual Set at bank 0");          
+#endif
               updatePin(pinNr, cmd, 0);
               break;
             case '1':
+#ifdef DEBUG
               Serial.println("Manual Set at bank 1");          
+#endif
               updatePin(pinNr, cmd, 1);
               break;
             case '2':
+#ifdef DEBUG
               Serial.println("Manual Set at bank 2");          
+#endif
                updatePin(pinNr, cmd, 2);
                break;
             case '3':
+#ifdef DEBUG
                 Serial.println("Manual Set at bank 3");          
+#endif
                updatePin(pinNr, cmd, 3);
                break;
           }
@@ -392,7 +423,9 @@ void loop()
         }
         else if (strstr(clientline, "GET /favicon") != 0)
         {
+#ifdef DEBUG
           Serial.println("Favicon requested");
+#endif
           SendFavicon(client);
           break;
         }
@@ -406,7 +439,9 @@ void loop()
           soft_restart();
         }
                   
+#ifdef DEBUG
         Serial.println("Call main");
+#endif
         MainPage(client);
         break;
       }
@@ -415,6 +450,8 @@ void loop()
     delay(20); // 1?
   
     client.stop();
+#ifdef DEBUG
     Serial.println("disconnected.");
+#endif
   }
 }
