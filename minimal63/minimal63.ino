@@ -225,6 +225,8 @@ void MainPage(EthernetClient &client)
    client.println(F("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>"));
    client.println(("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://"+ URLToJS +"style.css\" media=\"screen\"/>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"init.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"ShortCut.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Profile.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Disable.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Label.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Globals.js\"></script>"));

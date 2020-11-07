@@ -4,6 +4,8 @@ function init()
     createBankButtons(1);
     createBankButtons(2);
     createBankButtons(3);
-    GetStatus();
+    //GetStatus();
+    addKeyEventListener();
+    loadInitProfile();
     setInterval(GetStatus, 10000);
 }

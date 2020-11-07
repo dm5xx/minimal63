@@ -45,13 +45,18 @@ function clickRelay(bankNr, relanNr)
 
     var submitValue = GetValueByOrderedArray(preparedArray);
 
+    subMitValue(bankNr, submitValue)
+}
+
+function subMitValue(bankNr, submitValue)
+{
     fetch('http://'+url+'/Set'+bankNr+'/'+submitValue, { timeout : 2000})
-        .then((response) => { return response})
-        .then((data) => {
-            console.log("FiredFiredFired");
-            setTimeout(GetStatus,500);
-        })
-        .catch((err) => {
-            console.log("Client Fehler: "+err);
-        });
+    .then((response) => { return response})
+    .then((data) => {
+        console.log("FiredFiredFired");
+        setTimeout(GetStatus,100);
+    })
+    .catch((err) => {
+        console.log("Client Fehler: "+err);
+    });
 }
