@@ -5,4 +5,5 @@ function init()
     createBankButtons(2);
     createBankButtons(3);
     GetStatus();
+    setInterval(GetStatus, 10000);
 }

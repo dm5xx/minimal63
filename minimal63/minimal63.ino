@@ -26,6 +26,9 @@ EthernetServer server(80); // (port 80 is default for HTTP)
 
 char requestString[100];
 
+String baseURL = "h.mmmedia-online.de/minimal63/";
+String webSwitchUrlRemote = "192.168.97.177"; 
+
 ////////////////////////////////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////////
 void GetOrderedArraybyValue(int value, byte * feld)
 {
@@ -202,34 +205,39 @@ void Send200OK(EthernetClient &client)
 
 void MainPage(EthernetClient &client)
 {
-   Send200OK(client);
+   client.println("HTTP/1.1 200 OK");
+   client.println(F("Content-Type: text/html"));
+   client.println("Connection: close");  // the connection will be closed after completion of the response   client.println(F(""));
    client.println(F(""));
    client.println(F("<!DOCTYPE html>"));
    client.println(F("<HTML>"));
    client.println(F("<HEAD>"));
-   client.println(F("<meta http-equiv=\"Cache-control\" content=\"no-cache\"><meta http-equiv=\"Expires\" content=\"0\">"));
-   client.print(F("<script type=\"text/javascript\" src=\""));
-   client.println(F("\"></script>"));
-   client.print(F("<script>var configAddress='"));
-   // configadresse?!
+   client.println(F("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>"));
+   client.println(("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://"+ baseURL +"style.css\" media=\"screen\"/>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"init.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"Label.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"Globals.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"LockDef.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"Lock.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"GroupDef.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"Group.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"UiHandler.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"GetData.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"SetData.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ baseURL +"Helper.js\"></script>"));
+   client.print(F(""));
+   client.println(F("// Change webSwitchUrlRemote to the url, where your webswitch is reachable from outside/inside. Dont forget the portforwarding..."));
+   client.print(F("<script>var url='"));
+   client.print((webSwitchUrlRemote));
    client.println(F("';</script>"));
-   client.print(F("<script src=\""));
-   // javascript url
-   client.println(F("\"></script>"));
-   client.print(F("<script src=\""));
-   // content js
-   client.println(F("\"></script>"));
-   client.print(F("<link rel=\"Stylesheet\" href=\""));
-   // css
-   client.println(F("\" type=\"text/css\">"));
    client.print(F("<TITLE>"));
-   client.print("minimal63");
+   client.print("minimal63 - Remote Switch by DM5XX");
    client.println(F("</TITLE>"));
    client.println(F("</HEAD>"));
    client.println(F("<BODY>"));
-   client.println(F("<div id=\"content\"></div>"));
-   client.println(F("<script>addContent();</script>"));
+   client.println(F("<div class=\"grid-container\" id=\"container\"></div>"));
    client.println(F("</BODY>"));
+   client.println(F("<script>(() => { init(); })()</script>"));
    client.println(F("</HTML>"));
 }
 
