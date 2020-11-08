@@ -22,7 +22,9 @@ int bankStatus2 = 0;
 int bankStatus3 = 0;
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
-IPAddress ip(192, 168, 97, 177);
+
+//uncomment and change if you need to adress a static ip in your local environment
+//IPAddress ip(192, 168, 97, 177);
 EthernetServer server(80); // (port 80 is default for HTTP)
 
 char requestString[100];
@@ -35,7 +37,8 @@ String URLToJS = "h.mmmedia-online.de/minimal63/";
 String URLToCustomize = "h.mmmedia-online.de/minimal63NAM/";
 
 // this is the url, where the dashboard will call to reach the switch. can be an internal IP (same as IPADDRESS above!!!) or a dyndns-url, forwarded to IPADDRESS (above).
-String SwitchURL = "192.168.97.177"; 
+String SwitchURL = "255.255.255.255"; 
+String MyLocalIP = "192.168.97.177"; 
 
 ////////////////////////////////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////////
 void GetOrderedArraybyValue(int value, byte * feld)
@@ -240,14 +243,14 @@ void MainPage(EthernetClient &client)
    client.println(("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://"+ URLToJS +"style.css\" media=\"screen\"/>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"init.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"ShortCut.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Profile.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Disable.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Label.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"BankDef.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Profile_c.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Disable_C.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Label_c.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"BankDef_c.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Globals.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"LockDef.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"LockDef_c.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Lock.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"GroupDef.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"GroupDef_c.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Group.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"UiHandler.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"GetData.js\"></script>"));
@@ -256,6 +259,8 @@ void MainPage(EthernetClient &client)
    client.print(F(""));
    client.println(F("<!-- Change SwitchURL to the url, where your webswitch is reachable from outside/inside. Dont forget the portforwarding...-->"));
    client.print(F("<script>var url='"));
+   client.print((MyLocalIP));
+   client.print(F("';\r var remote='"));
    client.print((SwitchURL));
    client.println(F("';</script>"));
    client.print(F("<TITLE>"));
@@ -275,15 +280,20 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
-  Serial.println("Ethernet WebServer Example");
+  Serial.println("Ethernet WebServer DHCP");
 
   // start the Ethernet connection and the server:
-  Ethernet.begin(mac, ip);
+  //Ethernet.begin(mac, ip);
+  Ethernet.begin(mac);
 
   // start the server
   server.begin();
   Serial.print("server is at ");
-  Serial.println(Ethernet.localIP());
+
+  IPAddress address = Ethernet.localIP();
+  MyLocalIP = String() + address[0] + "." + address[1] + "." + address[2] + "." + address[3];
+  
+  Serial.println(MyLocalIP);
 
   // set mode for all needed pins in each bank
   for (int out = 0; out < 16; out++)

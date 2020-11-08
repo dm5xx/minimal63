@@ -9,3 +9,4 @@ var statusBank2 = [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ];
 var statusBank3 = [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ];
  
 var lockSwitchStatus = false;
+
