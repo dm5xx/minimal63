@@ -6,6 +6,5 @@ function init()
     createBankButtons(3);
     createFooter();
     addKeyEventListener();
-    loadInitProfile();
     setInterval(GetStatus, 10000);
 }
