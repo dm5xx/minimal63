@@ -252,9 +252,8 @@ void MainPage(EthernetClient &client)
    client.print((MyLocalIP));
    client.print(":");
    client.print(myPort);
-   client.print(F("';\r var remote='"));
-   client.print((SwitchURL));
-   client.println(F("';</script>"));
+   client.print(F("';\r"));
+   client.println(F("</script>"));
    client.print(F("<TITLE>"));
    client.print("minimal63 - Remote Switch by DM5XX");
    client.println(F("</TITLE>"));

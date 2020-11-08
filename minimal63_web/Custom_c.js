@@ -13,10 +13,10 @@ function getYourRemoteIP()
         return;
     }
 
-    remote = useThisDynDNS + ":" + useRemotePort;
+    var remoteCon = useThisDynDNS + ":" + useRemotePort;
     console.log("Declared useThisDynDNS is: " + useThisDynDNS);
     console.log("Remote is now " + remote);
-    url = remote;
+    url = remoteCon;
     console.log("initsteps called...");
     initSteps();
 }
