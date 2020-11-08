@@ -13,6 +13,9 @@ Paste minimal63 and minimal63_web into this folder.
 
 Label.js => Adjust the Labels for the Webpage<br/>
 Lock.js => Define which slots should be locked<br/>
-Group.ls => Create groups. Highlander principle "There can be only one (on)"<br/>
+Group.js => Create groups. Highlander principle "There can be only one (on)"<br/>
+Profile.js => Define what Profile (All 4 bank, no locking/grouping! Define with caution!) should be loaded by Num-Pad 1....9<br/>
+Disable.js => Define which Button (Nr. 0...15) should NOT BE visible on each different Bank<br/>
+BankDef.js => Define the displayed Labels for Bank0...4<br/>
 
 Questions? dm5xx@gmx.de
