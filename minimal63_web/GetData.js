@@ -13,11 +13,6 @@ function GetStatus()
         });
 }
 
-function loadInitProfile()
-{
-    loadProfile(1);
-}
-
 function loadProfile(profileNr)
 {
     console.log("LoadProfile "+profileNr);
