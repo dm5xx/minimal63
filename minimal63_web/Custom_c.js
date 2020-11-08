@@ -15,7 +15,7 @@ function getYourRemoteIP()
 
     var remoteCon = useThisDynDNS + ":" + useRemotePort;
     console.log("Declared useThisDynDNS is: " + useThisDynDNS);
-    console.log("Remote is now " + remote);
+    console.log("Remote is now " + remoteCon);
     url = remoteCon;
     console.log("initsteps called...");
     initSteps();
