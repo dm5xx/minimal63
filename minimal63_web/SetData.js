@@ -53,8 +53,21 @@ function subMitValue(bankNr, submitValue)
     fetch('http://'+url+'/Set'+bankNr+'/'+submitValue, { timeout : 2000})
     .then((response) => { return response})
     .then((data) => {
-        console.log("FiredFiredFired");
+        console.log("Fired " + bankNr + " with Value " + submitValue);
         setTimeout(GetStatus,100);
+    })
+    .catch((err) => {
+        console.log("Client Fehler: "+err);
+    });
+}
+
+function subMitReset()
+{
+    fetch('http://'+url+'/Reset/', { timeout : 2000})
+    .then((response) => { return response})
+    .then((data) => {
+        console.log("Reset");
+        setTimeout(GetStatus,2000);
     })
     .catch((err) => {
         console.log("Client Fehler: "+err);

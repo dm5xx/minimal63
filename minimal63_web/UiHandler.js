@@ -28,10 +28,10 @@ function UpdateUI(data)
         updateBank(statusBank3, statusB3, 3);
     }
  
-    console.log("Recieved: " + data.B0);
-    console.log("Recieved: " + data.B1);
-    console.log("Recieved: " + data.B2);
-    console.log("Recieved: " + data.B3);
+    console.log("StatusValue_0: " + data.B0);
+    console.log("StatusValue_1: " + data.B1);
+    console.log("StatusValue_2: " + data.B2);
+    console.log("StatusValue_3: " + data.B3);
 }
 
 function updateBank(statusBank, status, banknr)
@@ -64,7 +64,7 @@ function createBankButtons(bankNr)
 {
     var createTitleElement = document.createElement("div");
     createTitleElement.setAttribute("class", "title");
-    createTitleElement.innerHTML ="Bank "+bankNr;
+    createTitleElement.innerHTML =window["BankLabel"]["Bank"+bankNr];
     document.getElementById("container").appendChild(createTitleElement);      
 
     for(var i = 0; i < 16; i++)
@@ -84,5 +84,31 @@ function createBankButtons(bankNr)
         createAElement.setAttribute("id", "b"+bankNr+"b"+i);
         document.getElementById("container").appendChild(createAElement);      
     }
+}
+
+function createFooter()
+{
+    var createTitleElement = document.createElement("div");
+    createTitleElement.setAttribute("class", "title");
+    createTitleElement.innerHTML ="Menu";
+    document.getElementById("container").appendChild(createTitleElement);      
+
+    for(var i = 0; i < 4; i++)
+    {
+        var createFooterElement = document.createElement("a");
+        createFooterElement.setAttribute("onclick", "subMitValue("+i+", 0)");
+        createFooterElement.setAttribute("class", "xxButton xxFooter");    
+        createFooterElement.innerHTML = "Bank "+i+"<br/>Reset";
+        createFooterElement.setAttribute("id", "r"+i+"r0");
+        document.getElementById("container").appendChild(createFooterElement);      
+    }    
+
+    var createResetAllElement = document.createElement("a");
+    createResetAllElement.setAttribute("onclick", "subMitReset()");
+    createResetAllElement.setAttribute("class", "xxButton xxFooterReset");    
+    createResetAllElement.innerHTML = "SWITCH<br/>RESET";
+    createResetAllElement.setAttribute("id", "rAll");
+    document.getElementById("container").appendChild(createResetAllElement);      
+
 }
 

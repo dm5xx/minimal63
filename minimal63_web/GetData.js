@@ -20,10 +20,12 @@ function loadInitProfile()
 
 function loadProfile(profileNr)
 {
+    console.log("LoadProfile "+profileNr);
+
     var currentProfile = window["Profile"+profileNr];
 
     subMitValue(0, currentProfile.Bank0);
-    subMitValue(1, currentProfile.Bank1);
-    subMitValue(2, currentProfile.Bank2);
-    subMitValue(3, currentProfile.Bank3);
+    setTimeout( () => { subMitValue(1, currentProfile.Bank1) },2000);
+    setTimeout( () => { subMitValue(2, currentProfile.Bank2) },2000);
+    setTimeout( () => { subMitValue(3, currentProfile.Bank3) },2000);
 }

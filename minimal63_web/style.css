@@ -37,6 +37,15 @@
     background-color: #222222;
 }
 
+.xxFooterReset {
+    background-color: orange;
+    grid-column-start: 7;
+    grid-column-end: span 2;    
+}
+
+.xxFooter {
+    background-color: crimson;
+}
 
 
 @font-face { 
@@ -69,7 +78,7 @@ src: url("FFFFORWA.TTF");
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     gap: 5px 5px;
     grid-template-areas:
     ". . . . . . . ."
