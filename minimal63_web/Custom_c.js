@@ -1,4 +1,4 @@
-var useRemoteURL = true;
+var useRemoteURL = false;
 var useRemotePort = 59;
 
 var useThisDynDNS = "188.194.220.249";

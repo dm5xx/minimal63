@@ -25,7 +25,8 @@ byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 
 //uncomment and change if you need to adress a static ip in your local environment
 //IPAddress ip(192, 168, 97, 177);
-EthernetServer server(59); // (port 80 is default for HTTP)
+int myPort = 59;
+EthernetServer server(myPort); // (port 80 is default for HTTP)
 
 char requestString[100];
 bool isLocked = false;
@@ -249,6 +250,8 @@ void MainPage(EthernetClient &client)
    client.println(F("<!-- Change SwitchURL to the url, where your webswitch is reachable from outside/inside. Dont forget the portforwarding...-->"));
    client.print(F("<script>var url='"));
    client.print((MyLocalIP));
+   client.print(":");
+   client.print(myPort);
    client.print(F("';\r var remote='"));
    client.print((SwitchURL));
    client.println(F("';</script>"));
