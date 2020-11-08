@@ -98,7 +98,7 @@ function createFooter()
         var createFooterElement = document.createElement("a");
         createFooterElement.setAttribute("onclick", "subMitValue("+i+", 0)");
         createFooterElement.setAttribute("class", "xxButton xxFooter");    
-        createFooterElement.innerHTML = "Bank "+i+"<br/>Reset";
+        createFooterElement.innerHTML = window["BankLabel"]["Bank"+i]+"<br/>Reset";
         createFooterElement.setAttribute("id", "r"+i+"r0");
         document.getElementById("container").appendChild(createFooterElement);      
     }    
