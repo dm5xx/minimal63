@@ -66,8 +66,7 @@ function subMitReset()
     fetch('http://'+url+'/Reset/', { timeout : 2000})
     .then((response) => { return response})
     .then((data) => {
-        console.log("Reset");
-        setTimeout(GetStatus,2000);
+        console.log("Reset called!");
     })
     .catch((err) => {
         console.log("Client Fehler: "+err);
