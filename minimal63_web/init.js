@@ -1,5 +1,10 @@
 function init()
 {
+    getYourRemoteIP();
+}
+
+function initSteps()
+{
     createBankButtons(0);
     createBankButtons(1);
     createBankButtons(2);

@@ -25,7 +25,7 @@ byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 
 //uncomment and change if you need to adress a static ip in your local environment
 //IPAddress ip(192, 168, 97, 177);
-EthernetServer server(80); // (port 80 is default for HTTP)
+EthernetServer server(59); // (port 80 is default for HTTP)
 
 char requestString[100];
 bool isLocked = false;
@@ -37,8 +37,9 @@ String URLToJS = "h.mmmedia-online.de/minimal63/";
 String URLToCustomize = "h.mmmedia-online.de/minimal63NAM/";
 
 // this is the url, where the dashboard will call to reach the switch. can be an internal IP (same as IPADDRESS above!!!) or a dyndns-url, forwarded to IPADDRESS (above).
-String SwitchURL = "255.255.255.255"; 
+String SwitchURL = "255.255.255.255";
 String MyLocalIP = "192.168.97.177"; 
+String ClientIP = "255.255.255.255"; 
 
 ////////////////////////////////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////////
 void GetOrderedArraybyValue(int value, byte * feld)
@@ -175,22 +176,6 @@ void SendFavicon(EthernetClient client)
    client.println(F("</HTML>"));
 }
 
-void GetData(EthernetClient &client)
-{
-  Send200OK(client);
-  client.println(F("Access-Control-Allow-Origin: *"));
-  client.println(F(""));
-  client.print(F("callbackXX({\"b0\": "));
-  client.print(bankStatus0);
-  client.print(F(", \"b1\": "));
-  client.print(bankStatus1);
-  client.print(F(", \"b2\": "));
-  client.print(bankStatus2);
-  client.print(F(", \"b3\": "));
-  client.print(bankStatus3);
-  client.print(F("})"));
-}
-
 void GetDataJSON(EthernetClient &client)
 {
   client.println(F("HTTP/1.0 200 OK"));
@@ -208,7 +193,9 @@ void GetDataJSON(EthernetClient &client)
   client.print(bankStatus3);
   client.print(F(", \"LockStatus\": "));
   client.print(isLocked);
-  client.print(F("}"));
+  client.print(F(", \"Clients\": \""));
+  client.print(ClientIP);
+  client.print(F("\"}"));
 }
 
 void SendLocked(EthernetClient &client)
@@ -233,6 +220,7 @@ void Send200OK(EthernetClient &client)
 void MainPage(EthernetClient &client)
 {
    client.println("HTTP/1.1 200 OK");
+   client.println(F("Access-Control-Allow-Origin: *"));
    client.println(F("Content-Type: text/html"));
    client.println("Connection: close");  // the connection will be closed after completion of the response   client.println(F(""));
    client.println(F(""));
@@ -321,6 +309,9 @@ void loop()
   
   if (client) 
   {
+    IPAddress localClientIP = client.remoteIP();
+    ClientIP = String() + localClientIP[0] + "." + localClientIP[1] + "." + localClientIP[2] + "." + localClientIP[3];
+  
     byte charIndex = 0;
     
     while (client.connected()) 
