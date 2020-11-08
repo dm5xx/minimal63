@@ -28,8 +28,8 @@ function UpdateUI(data)
         updateBank(statusBank3, statusB3, 3);
     }
 
-    if(data.LockingStatus != lockSwitchStatus)
-        lockSwitchHandler(data.LockStatus);
+    //if(data.LockingStatus != lockSwitchStatus)
+    lockSwitchHandler(data.LockStatus);
     
     console.log("StatusValue_0: " + data.B0);
     console.log("StatusValue_1: " + data.B1);
