@@ -2,6 +2,11 @@ function clickRelay(bankNr, relanNr)
 {
     console.log("Set Fired");
 
+    if(lockSwitchStatus)
+    {
+        alert("The Switch is completly LOCKED");
+        return;
+    }
 
     var isLocked = checkIfPinIsLocked(relanNr, bankNr);
 
@@ -11,7 +16,7 @@ function clickRelay(bankNr, relanNr)
 
     if(isLocked)
     {
-        alert("LOCKED!");
+        alert("This SLOT is LOCKED!");
         return;
     }
 
@@ -63,7 +68,7 @@ function subMitValue(bankNr, submitValue)
 
 function subMitReset()
 {
-    fetch('http://'+url+'/Reset/', { timeout : 2000})
+    fetch('http://'+url+'/Reset', { timeout : 2000})
     .then((response) => { return response})
     .then((data) => {
         console.log("Reset called!");
@@ -71,4 +76,62 @@ function subMitReset()
     .catch((err) => {
         console.log("Client Fehler: "+err);
     });
+}
+
+function updateLockStatus()
+{
+    console.log("Update LockStatus called");
+
+    if(!lockSwitchStatus)
+        lockSwitch();
+    else
+        unlockSwitch();
+}
+
+function lockSwitch()
+{
+    fetch('http://'+url+'/Lock', { timeout : 2000})
+    .then((response) => { return response})
+    .then((data) => {
+
+        lockSwitchHandler(true);
+        console.log("Lock called!");
+    })
+    .catch((err) => {
+        console.log("Client Fehler: "+err);
+    });
+}
+
+function unlockSwitch()
+{
+    fetch('http://'+url+'/UnLock', { timeout : 2000})
+    .then((response) => { return response})
+    .then((data) => {
+
+        lockSwitchHandler(false);
+
+        console.log("Unlock called!");
+    })
+    .catch((err) => {
+        console.log("Client Fehler: "+err);
+    });
+}
+
+function lockSwitchHandler(lockStatus)
+{
+    lockSwitchStatus = lockStatus;
+
+    var elementName = "lock";
+    var element = document.getElementById(elementName); 
+
+    if(lockSwitchStatus)
+    {
+        element.className = "xxButton xxLockSwitch xxButtonRed";
+        element.innerHTML = "SWITCH is LOCKED <br/>UNLOCK";
+    }
+    else
+    {
+        element.className = "xxButton xxLockSwitch xxButtonGreen";
+        element.innerHTML = "SWITCH not LOCKED<br/>LOCK";
+    }
 }

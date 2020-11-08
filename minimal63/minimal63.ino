@@ -26,6 +26,7 @@ IPAddress ip(192, 168, 97, 177);
 EthernetServer server(80); // (port 80 is default for HTTP)
 
 char requestString[100];
+bool isLocked = false;
 
 // all files are in their newest version on DM5XX webserver. You have to point this address to your websrver oder local computer, if you want to change something else than labels..
 String URLToJS = "h.mmmedia-online.de/minimal63/";
@@ -202,9 +203,22 @@ void GetDataJSON(EthernetClient &client)
   client.print(bankStatus2);
   client.print(F(", \"B3\": "));
   client.print(bankStatus3);
+  client.print(F(", \"LockStatus\": "));
+  client.print(isLocked);
   client.print(F("}"));
 }
 
+void SendLocked(EthernetClient &client)
+{
+  client.println(F("HTTP/1.0 200 OK"));
+  client.println(F("Access-Control-Allow-Origin: *"));
+  client.println(F("Content-Type: application/json"));
+  client.println(F("Connection: close"));
+  client.println(F(""));
+  client.print(F("{\"Lockingstatus\": "));
+  client.print(isLocked);
+  client.print(F("}"));
+}
 void Send200OK(EthernetClient &client)
 {
   client.println(F("HTTP/1.1 200 OK")); //send new page
@@ -346,6 +360,12 @@ void loop()
         
         if(strstr(clientline, "GET /Set") != 0)
         {
+          if(isLocked)
+          {
+            SendLocked(client);
+            break;
+          }
+          
           int value = subSss.toInt(); 
   
 #ifdef DEBUG
@@ -440,6 +460,18 @@ void loop()
           delay(50); // 1?  
           client.stop();
           soft_restart();
+        }
+        else if (strstr(clientline, "GET /Lock") != 0)
+        {
+          isLocked = true;
+          SendLocked(client);
+          break;
+        }
+        else if (strstr(clientline, "GET /UnLock") != 0)
+        {
+          isLocked = false;
+          SendLocked(client);
+          break;
         }
                   
 #ifdef DEBUG

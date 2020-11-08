@@ -43,6 +43,15 @@
     grid-column-end: span 2;    
 }
 
+.xxLogSwitchLocked {
+    background-color: orange;
+}
+
+.xxLockSwitch {
+    grid-column-start: 6;
+}
+
+
 .xxFooter {
     background-color: crimson;
 }

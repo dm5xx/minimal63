@@ -27,11 +27,15 @@ function UpdateUI(data)
         // fire update bank0;
         updateBank(statusBank3, statusB3, 3);
     }
- 
+
+    if(data.LockingStatus != lockSwitchStatus)
+        lockSwitchHandler(data.LockStatus);
+    
     console.log("StatusValue_0: " + data.B0);
     console.log("StatusValue_1: " + data.B1);
     console.log("StatusValue_2: " + data.B2);
     console.log("StatusValue_3: " + data.B3);
+    console.log("StatusLocking: " + data.LockStatus);
 }
 
 function updateBank(statusBank, status, banknr)
@@ -102,6 +106,13 @@ function createFooter()
         createFooterElement.setAttribute("id", "r"+i+"r0");
         document.getElementById("container").appendChild(createFooterElement);      
     }    
+
+    var createLockElement = document.createElement("a");
+    createLockElement.setAttribute("onclick", "updateLockStatus()");
+    createLockElement.setAttribute("class", "xxButton xxLockSwitch xxButtonGreen");    
+    createLockElement.innerHTML = "SWITCH<br/>LOCK";
+    createLockElement.setAttribute("id", "lock");
+    document.getElementById("container").appendChild(createLockElement);      
 
     var createResetAllElement = document.createElement("a");
     createResetAllElement.setAttribute("onclick", "subMitReset()");
