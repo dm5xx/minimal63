@@ -6,7 +6,7 @@ You need:
 - PCB from remoteQTH.com is not necessary, but makes things a lot more easy... https://remoteqth.com/arduino-web-switch.php
 
 Install newest Arduino IDE.
-Create dummy project. earch for it. Mine was in E:\OneDrive\Documents\Arduino
+Create dummy project. search for it in your windows explorer. Mine was in E:\OneDrive\Documents\Arduino
 
 Paste the content of "libraries" into "libraries"
 Paste minimal63 and minimal63_web into this folder.
