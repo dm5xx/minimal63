@@ -243,6 +243,7 @@ void MainPage(EthernetClient &client)
    client.println(("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://"+ URLToJS +"style.css\" media=\"screen\"/>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"init.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"ShortCut.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Custom_c.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Profile_c.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Disable_C.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Label_c.js\"></script>"));
