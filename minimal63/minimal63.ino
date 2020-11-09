@@ -16,10 +16,10 @@ byte statusBank2[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 byte statusBank3[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 
 // Here ths current status is stored - faster check for equality...
-int bankStatus0 = 0;
-int bankStatus1 = 0;
-int bankStatus2 = 0;
-int bankStatus3 = 0;
+unsigned int bankStatus0 = 0;
+unsigned int bankStatus1 = 0;
+unsigned int bankStatus2 = 0;
+unsigned int bankStatus3 = 0;
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 
@@ -162,12 +162,12 @@ void updateSingleRelay(int pin, byte value, byte *pins)
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++ THE WEB PAGES ++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 /*********************************************************************************************************************************/
 
-void sendEmptyPage(EthernetClient client)
+void sendEmptyPage(EthernetClient &client)
 {
   Send200OK(client);
 }
 
-void SendFavicon(EthernetClient client)
+void SendFavicon(EthernetClient &client)
 {
    Send200OK(client);
    client.println(F(""));
@@ -234,7 +234,7 @@ void MainPage(EthernetClient &client)
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"ShortCut.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Custom_c.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Profile_c.js\"></script>"));
-   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Disable_C.js\"></script>"));
+   client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Disable_c.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"Label_c.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToCustomize +"BankDef_c.js\"></script>"));
    client.println(("<script language=\"javascript\" type=\"text/javascript\" src=\"http://"+ URLToJS +"Globals.js\"></script>"));
@@ -267,6 +267,10 @@ void MainPage(EthernetClient &client)
 
 void setup() {
 
+  // disable SD SPI
+  pinMode(4,OUTPUT);
+  digitalWrite(4,HIGH);
+  
   Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
@@ -315,9 +319,20 @@ void loop()
     ClientIP = String() + localClientIP[0] + "." + localClientIP[1] + "." + localClientIP[2] + "." + localClientIP[3];
   
     byte charIndex = 0;
+
+    // connectLoop controls the hardware fail timeout
+    int connectLoop = 0;
     
     while (client.connected()) 
     { 
+      connectLoop++;
+
+      if(connectLoop > 10000)
+      {
+        client.stop();
+        break;
+      }
+      
       if (client.available()) 
       {
         char c = client.read();
@@ -347,6 +362,7 @@ void loop()
             Serial.println("Get detected");
 #endif
             GetDataJSON(client);
+            connectLoop = 0;
             break;
         }
 
@@ -367,6 +383,7 @@ void loop()
           if(isLocked)
           {
             SendLocked(client);
+            connectLoop = 0;
             break;
           }
           
@@ -405,6 +422,7 @@ void loop()
               break;
           }
           Send200OK(client);
+          connectLoop = 0;
           break;
         }
         else if(strstr(clientline, "GET /set") != 0)
@@ -446,6 +464,7 @@ void loop()
                break;
           }
           Send200OK(client);
+          connectLoop = 0;
           break;
         }
         else if (strstr(clientline, "GET /favicon") != 0)
@@ -454,6 +473,7 @@ void loop()
           Serial.println("Favicon requested");
 #endif
           SendFavicon(client);
+          connectLoop = 0;
           break;
         }
         else if (strstr(clientline, "GET /Reset") != 0)
@@ -469,12 +489,14 @@ void loop()
         {
           isLocked = true;
           SendLocked(client);
+          connectLoop = 0;
           break;
         }
         else if (strstr(clientline, "GET /UnLock") != 0)
         {
           isLocked = false;
           SendLocked(client);
+          connectLoop = 0;
           break;
         }
                   
@@ -482,11 +504,11 @@ void loop()
         Serial.println("Call main");
 #endif
         MainPage(client);
+        connectLoop = 0;
         break;
       }
     }
-    // give the web browser time to receive the data
-    delay(20); // 1?
+    delay(10); // 1?
   
     client.stop();
 #ifdef DEBUG
