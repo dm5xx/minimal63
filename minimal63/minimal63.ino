@@ -35,7 +35,8 @@ bool isLocked = false;
 String URLToJS = "h.mmmedia-online.de/minimal63/";
 
 // adjust this URL if you want to change Label.js, GroupDef.js, Lock.js, Disable.js (to customize them). So ALL 4 files must be stored on your own webserver/local computer than, even if you just want to leave one or more default!
-String URLToCustomize = "h.mmmedia-online.de/minimal63XX/";
+String URLToCustomize = "dl5nam.de/minimal63/";
+//String URLToCustomize = "h.mmmedia-online.de/minimal63XX/";
 
 // this is the url, where the dashboard will call to reach the switch. can be an internal IP (same as IPADDRESS above!!!) or a dyndns-url, forwarded to IPADDRESS (above).
 String SwitchURL = "255.255.255.255";
