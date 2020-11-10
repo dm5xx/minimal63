@@ -16,7 +16,10 @@ function clickRelay(bankNr, relanNr)
 
     if(isLocked)
     {
-        alert("This SLOT is LOCKED!");
+        if(!hideLockAlert)
+            alert("This SLOT is LOCKED!");
+        
+        console.log("Slot is locked!");
         return;
     }
 

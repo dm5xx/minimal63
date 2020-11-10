@@ -9,8 +9,13 @@ function initSteps()
     createBankButtons(1);
     createBankButtons(2);
     createBankButtons(3);
-    createFooter();
-    addKeyEventListener();
+
+    if(!hideMenu)
+        createFooter();
+    
+    if(!disableNumbPadShortcuts)
+        addKeyEventListener();
+    
     GetStatus();
     setInterval(GetStatus, 10000);
 }
