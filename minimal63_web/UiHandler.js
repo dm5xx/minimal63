@@ -64,6 +64,19 @@ function updateBank(statusBank, status, banknr)
 
 }
 
+function initCreateBankButtons()
+{
+    if(typeof numberOfBoards === "undefined")
+        numberOfBoards = 4;
+        
+    for(var i = 0; i < numberOfBoards; i++)
+    {
+        if(window["BankLabel"]["Bank"+i] == undefined)
+            continue;
+        createBankButtons(i);
+    }
+}
+
 function createBankButtons(bankNr)
 {
     var createTitleElement = document.createElement("div");
@@ -97,7 +110,7 @@ function createFooter()
     createTitleElement.innerHTML ="Menu";
     document.getElementById("container").appendChild(createTitleElement);      
 
-    for(var i = 0; i < 4; i++)
+    for(var i = 0; i < numberOfBoards; i++)
     {
         var createFooterElement = document.createElement("a");
         createFooterElement.setAttribute("onclick", "subMitValue("+i+", 0)");
