@@ -112,6 +112,9 @@ function createFooter()
 
     for(var i = 0; i < numberOfBoards; i++)
     {
+        if(window["BankLabel"]["Bank"+i] == undefined)
+            continue;
+        
         var createFooterElement = document.createElement("a");
         createFooterElement.setAttribute("onclick", "subMitValue("+i+", 0)");
         createFooterElement.setAttribute("class", "xxButton xxFooter");    
