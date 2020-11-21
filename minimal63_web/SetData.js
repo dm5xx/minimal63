@@ -1,6 +1,6 @@
 function clickRelay(bankNr, relanNr)
 {
-    console.log("Set Fired");
+    console.log("Set CLickrelay is fired");
 
     if(lockSwitchStatus)
     {
@@ -9,10 +9,7 @@ function clickRelay(bankNr, relanNr)
     }
 
     var isLocked = checkIfPinIsLocked(relanNr, bankNr);
-
     var result =  getPinToSwitch(relanNr, bankNr);
-
-    console.log("I found muu " + result.Pin);
 
     if(isLocked)
     {
@@ -56,13 +53,17 @@ function clickRelay(bankNr, relanNr)
     subMitValue(bankNr, submitValue)
 }
 
-function subMitValue(bankNr, submitValue)
+function subMitValue(bankNr, Value)
 {
-    fetch('http://'+url+'/Set'+bankNr+'/'+submitValue, { timeout : 2000})
+    var x = [];
+    x["B"+bankNr] = Value; 
+    UpdateUI(x);
+        
+    fetch('http://'+url+'/Set'+bankNr+'/'+Value, { timeout : 2000})
     .then((response) => { return response})
     .then((data) => {
-        console.log("Fired " + bankNr + " with Value " + submitValue);
-        setTimeout(GetStatus,100);
+        console.log("Fired " + bankNr + " with Value " + Value);
+        setTimeout(GetStatus, 100);
     })
     .catch((err) => {
         console.log("Client Fehler: "+err);
@@ -112,7 +113,6 @@ function unlockSwitch()
     .then((data) => {
 
         lockSwitchHandler(false);
-
         console.log("Unlock called!");
     })
     .catch((err) => {

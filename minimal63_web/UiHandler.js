@@ -1,40 +1,15 @@
 function UpdateUI(data)
-{
-    if(statusB0 != data.B0)
+{   
+    for(var a= 0; a < numberOfBoards; a++)
     {
-        statusB0 = data.B0;
-        // fire update bank0;
-        updateBank(statusBank0, statusB0, 0);
+        if(window["statusB"+a] != data["B"+a])
+        {
+            window["statusB"+a] = data["B"+a];
+            updateBank(window["statusBank"+a], window["statusB"+a], a);
+            console.log("Value of Bank"+a+": " + data["B"+a]);
+        }        
     }
- 
-    if(statusB1 != data.B1)
-    {
-        statusB1 = data.B1;
-        // fire update bank1;
-        updateBank(statusBank1, statusB1, 1);
-    }
- 
-    if(statusB2 != data.B2)
-    {
-        statusB2 = data.B2;
-        // fire update bank0;
-        updateBank(statusBank2, statusB2, 2);
-    }
- 
-    if(statusB3 != data.B3)
-    {
-        statusB3 = data.B3;
-        // fire update bank0;
-        updateBank(statusBank3, statusB3, 3);
-    }
-
-    //if(data.LockingStatus != lockSwitchStatus)
-    lockSwitchHandler(data.LockStatus);
-    
-    console.log("StatusValue_0: " + data.B0);
-    console.log("StatusValue_1: " + data.B1);
-    console.log("StatusValue_2: " + data.B2);
-    console.log("StatusValue_3: " + data.B3);
+    lockSwitchHandler(data.LockStatus);    
     console.log("StatusLocking: " + data.LockStatus);
 }
 

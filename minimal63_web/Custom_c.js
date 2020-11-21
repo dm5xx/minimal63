@@ -17,6 +17,9 @@ var hideLockAlert = false;
 // set this to true: the profiles 1...9 (profile.js) connot be called by numpad values 1...9
 var disableNumbPadShortcuts = false;
 
+// how many boards are connected to the switch...
+var numberOfBoards = 4;
+
 function getYourRemoteIP()
 {
     if(!useRemoteURL)
