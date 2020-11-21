@@ -20,7 +20,7 @@ function checkIfPinIsLocked(pin, bankNrToSwitch)
     {
         // if its switched on, return true
         //if( window['statusBank'+lockedIn[b]][pin] == 1)
-        if(isKInNSet(window['statusB'+bankNr], lockedIn[b][pin]))
+        if(isKInNSet(window['statusB'+lockedIn[b]], pin))
             return true;
     }
     //else return false :)
