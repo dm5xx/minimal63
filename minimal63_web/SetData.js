@@ -58,7 +58,7 @@ function subMitValue(bankNr, Value)
     .then((response) => { return response})
     .then((data) => {
         console.log("Fired " + bankNr + " with Value " + Value);
-        setTimeout(GetStatus, 100);
+        //setTimeout(GetStatus, 100);
     })
     .catch((err) => {
         console.log("Client Fehler: "+err);
@@ -68,9 +68,12 @@ function subMitValue(bankNr, Value)
 function subMitReset()
 {
     fetch('http://'+url+'/Reset', { timeout : 2000})
-    .then((response) => { return response})
-    .then((data) => {
+    .then((response) => { return response.json()})
+        .then((data) => {
         console.log("Reset called!");
+
+        if(data.Callback != undefined)
+            RiseCallback(data);
     })
     .catch((err) => {
         console.log("Client Fehler: "+err);

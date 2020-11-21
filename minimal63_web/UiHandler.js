@@ -134,4 +134,3 @@ function createFooter()
     document.getElementById("container").appendChild(createResetAllElement);      
 
 }
-

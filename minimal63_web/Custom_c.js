@@ -3,13 +3,13 @@
 var useRemoteURL = false;
 
 // insert you dyndns address here dyndns-ip/dyndns-name ======> public router-ip
-var useThisDynDNS = "188.194.220.249";
+var useThisDynDNS = "ph57pz6bsa2qs41o.myfritz.net";
 
 // insert the forwarded port internet ------> public router-ip:59 ----> minimal63-ip:59  
 var useRemotePort = 59;
 
 // is this is set to true, the menu is disabled.
-var hideMenu = false;
+var hideMenu =false;
 
 // If set to true, the alter message when a locked slot (lockdef.js) is called is disabled
 var hideLockAlert = false;
@@ -18,7 +18,7 @@ var hideLockAlert = false;
 var disableNumbPadShortcuts = false;
 
 // how many boards are connected to the switch...
-var numberOfBoards = 4;
+var numberOfBoards = 1;
 
 function getYourRemoteIP()
 {
@@ -37,3 +37,17 @@ function getYourRemoteIP()
     console.log("initsteps called...");
     initSteps();
 }
+
+function RiseCallback(data)
+{
+    if(data.Callback == "Reset")
+        OpenAdminPage();    
+}
+
+// If you are running on a raspberry pi... you can open the admin page.. :P
+function OpenAdminPage()
+{
+    var win = window.open('server.php', '_blank');
+    win.focus();
+}
+
