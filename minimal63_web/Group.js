@@ -18,7 +18,7 @@ function getPinToSwitch(pin, bankNrToSwitch)
     
     // if group is empty => do nothing...
     if(keys != undefined)
-        requestedNumberOfGroups = Object.keys(window['groupB'+bankNrToSwitch]).length; window['groupB'+bankNrToSwitch];
+        requestedNumberOfGroups = Object.keys(window['groupB'+bankNrToSwitch]).length; //window['groupB'+bankNrToSwitch];
     
     console.log("Found number of groups: "+requestedNumberOfGroups);
 

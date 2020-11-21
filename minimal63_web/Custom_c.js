@@ -20,6 +20,7 @@ var disableNumbPadShortcuts = false;
 // how many boards are connected to the switch...
 var numberOfBoards = 1;
 
+// this is the function called by init. If you want to add something, use this function to call some init-stuff you want
 function getYourRemoteIP()
 {
     if(!useRemoteURL)
@@ -38,6 +39,7 @@ function getYourRemoteIP()
     initSteps();
 }
 
+// THis is the function which will be called if defined and if its not a normal get 
 function RiseCallback(data)
 {
     if(data.Callback == "Reset")

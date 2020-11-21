@@ -58,7 +58,7 @@ function subMitValue(bankNr, Value)
     .then((response) => { return response})
     .then((data) => {
         console.log("Fired " + bankNr + " with Value " + Value);
-        //setTimeout(GetStatus, 100);
+        setTimeout(GetStatus, 100);
     })
     .catch((err) => {
         console.log("Client Fehler: "+err);
