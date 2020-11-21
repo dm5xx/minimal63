@@ -20,13 +20,8 @@ function clickRelay(bankNr, relanNr)
         return;
     }
 
-    var preparedArray = [] 
+    var preparedArray = GetOrderedArraybyValue(window['statusB'+bankNr]);
     
-    for(var m = 0; m < 16; m++)
-    {
-        preparedArray[m] = window['statusBank'+bankNr][m];
-    }
-
     if(result.PinOn != relanNr)
     {
         setAllGroupdPinsToOff(preparedArray, result.Group, bankNr);
@@ -50,7 +45,7 @@ function clickRelay(bankNr, relanNr)
 
     var submitValue = GetValueByOrderedArray(preparedArray);
 
-    subMitValue(bankNr, submitValue)
+    subMitValue(bankNr, submitValue);
 }
 
 function subMitValue(bankNr, Value)

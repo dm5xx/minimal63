@@ -5,7 +5,8 @@ function UpdateUI(data)
         if(window["statusB"+a] != data["B"+a])
         {
             window["statusB"+a] = data["B"+a];
-            updateBank(window["statusBank"+a], window["statusB"+a], a);
+            //updateBank(window["statusBank"+a], window["statusB"+a], a);
+            updateBank(window["statusB"+a], a);
             console.log("Value of Bank"+a+": " + data["B"+a]);
         }        
     }
@@ -13,7 +14,33 @@ function UpdateUI(data)
     console.log("StatusLocking: " + data.LockStatus);
 }
 
-function updateBank(statusBank, status, banknr)
+// function updateBank(statusBank, status, banknr)
+// {
+//     var convertedToArray = GetOrderedArraybyValue(status);
+//     var newClassName;
+
+//     console.log("Converted: " + convertedToArray);
+    
+//     for (i = 0; i < 16; i++)
+//     {
+//         if(statusBank[i] != convertedToArray[i])
+//         {
+//             statusBank[i] = convertedToArray[i];
+
+//             if(statusBank[i] == 0)
+//                 newClassName = "xxButton";
+//             else
+//                 newClassName = "xxButton xxButtonGreen";
+
+//             var elementName = "b"+banknr+"b"+i;
+//             var element = document.getElementById(elementName); 
+//             element.className = newClassName;
+//         }
+//     }
+
+// }
+
+function updateBank(status, banknr)
 {
     var convertedToArray = GetOrderedArraybyValue(status);
     var newClassName;
@@ -22,21 +49,15 @@ function updateBank(statusBank, status, banknr)
     
     for (i = 0; i < 16; i++)
     {
-        if(statusBank[i] != convertedToArray[i])
-        {
-            statusBank[i] = convertedToArray[i];
+        if(convertedToArray[i] == 0)
+            newClassName = "xxButton";
+        else
+            newClassName = "xxButton xxButtonGreen";
 
-            if(statusBank[i] == 0)
-                newClassName = "xxButton";
-            else
-                newClassName = "xxButton xxButtonGreen";
-
-            var elementName = "b"+banknr+"b"+i;
-            var element = document.getElementById(elementName); 
-            element.className = newClassName;
-        }
+        var elementName = "b"+banknr+"b"+i;
+        var element = document.getElementById(elementName); 
+        element.className = newClassName;
     }
-
 }
 
 function initCreateBankButtons()

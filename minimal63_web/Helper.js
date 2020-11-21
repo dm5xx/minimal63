@@ -27,3 +27,11 @@ function GetValueByOrderedArray(arr)
 function float2int(value) {
     return  Math.trunc(value);
 }
+
+function isKInNSet(n, k) 
+{ 
+    if (n & (1 << (k))) 
+        return true; 
+    else
+        return false;
+} 

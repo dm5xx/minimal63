@@ -57,7 +57,9 @@ function isPinOnInTheGroup(group, bankNr)
 {
     for(var f=0; f < group.length; f++)
     {
-        if(window['statusBank'+bankNr][group[f]] == 1)
+        window['statusB'+bankNr]
+
+        if(isKInNSet(window['statusB'+bankNr], group[f]))
             return group[f];
     }
     return -1;
