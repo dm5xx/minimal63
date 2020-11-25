@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "minimal63"
+		},
+		{
+			"path": "Public\\minimal_control"
+		},
+		{
+			"path": "Public\\minimal_custom"
+		}
+	],
+	"settings": {}
+}
