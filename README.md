@@ -8,8 +8,10 @@ You need:
 Install newest Arduino IDE.
 Create dummy project. search for it in your windows explorer. Mine was in E:\OneDrive\Documents\Arduino
 
-Paste the content of "libraries" into "libraries"
-Paste minimal63 and minimal63_web into this folder.
+Paste the content of "libraries" into "libraries" (or create folder if he doesnt exist)
+Get files dm5xx/minimal_custom and if needed dm5xx/minimal_control.
+
+Paste minimal63 into this folder and dm5xx/minimal_custom and if needed dm5xx/minimal_control into the folder minimal63/public.
 
 Label.js => Adjust the Labels for the Webpage<br/>
 Lock.js => Define which slots should be locked<br/>
