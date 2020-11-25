@@ -57,7 +57,7 @@ void GetOrderedArraybyValue(unsigned int value, byte * feld)
 
 int GetValueByOrderedArray(byte * arr)
 {
-  int result = 0;
+  unsigned int result = 0;
       
   for(int a = 15; a >= 0; a--)
   {
@@ -102,7 +102,7 @@ void updatePin(int pin, byte value, int bankNr)
   }
 }
 
-void updatePinStatus(int value, int bankNr)
+void updatePinStatus(unsigned int value, int bankNr)
 {
   switch(bankNr)
   {
