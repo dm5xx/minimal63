@@ -1,7 +1,7 @@
 #include <SoftReset.h>
 #include <Ethernet.h>
 
-//#define DEBUG
+#define DEBUG
 
 // here you can define, which pin-number belongs to which bank...
 byte pinsBank0[] = { 54, 2, 3, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18};
@@ -44,7 +44,7 @@ String MyLocalIP = "192.168.97.177";
 String ClientIP = "255.255.255.255"; 
 
 ////////////////////////////////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////////
-void GetOrderedArraybyValue(int value, byte * feld)
+void GetOrderedArraybyValue(unsigned int value, byte * feld)
 {
     int i;
 
