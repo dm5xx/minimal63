@@ -219,6 +219,17 @@ void Send200OK(EthernetClient &client)
   client.println(F("Content-Type: text/html"));
 }
 
+void Send200JSONOK(EthernetClient &client)
+{
+  client.println(F("HTTP/1.0 200 OK"));
+  client.println(F("Access-Control-Allow-Origin: *"));
+  client.println(F("Content-Type: application/json"));
+  client.println(F("Connection: close"));
+  client.println(F(""));
+  client.print(F("{\"Status\": \"OK\"}"));
+}
+
+
 void MainPage(EthernetClient &client)
 {
    client.println("HTTP/1.1 200 OK");
@@ -421,7 +432,7 @@ void loop()
               updatePinStatus(value, 3);            
               break;
           }
-          Send200OK(client);
+          Send200JSONOK(client);
           connectLoop = 0;
           break;
         }
@@ -463,7 +474,7 @@ void loop()
                updatePin(pinNr, cmd, 3);
                break;
           }
-          Send200OK(client);
+          Send200JSONOK(client);
           connectLoop = 0;
           break;
         }
@@ -478,9 +489,7 @@ void loop()
         }
         else if (strstr(clientline, "GET /Reset") != 0)
         {
-          client.println(F(""));
-          client.println(F("<!DOCTYPE html>"));
-          client.println(F("<HTML><BODY>R-E-S-E-T!!!</BODY></HTML>"));
+          Send200JSONOK(client);
           delay(50); // 1?  
           client.stop();
           soft_restart();
